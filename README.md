@@ -23,7 +23,9 @@ Ever wondered why To-Dos in Express were lost when the server restarted? Databas
 
 ## More About MongoDB
 
-MongoDB is part of the MEAN/MERN Stack, emphasizing JavaScript. It uses JavaScript-like syntax (not SQL) and stores records in BSON format.
+MongoDB is part of the MEAN/MERN Stack, emphasizing JavaScript.  
+
+MongoDB uses BSON (Binary JSON) instead of plain JSON for data storage. BSON is more efficient due to its binary format, resulting in faster operations and reduced storage space. It supports additional data types like Date and Binary, allowing MongoDB to handle diverse data more effectively. The binary nature of BSON contributes to better performance, making it a suitable choice for MongoDB's storage and retrieval requirements.
 
 ### MongoDB Documents
 
