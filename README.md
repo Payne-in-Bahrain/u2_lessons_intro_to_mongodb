@@ -72,7 +72,7 @@ After this brief session working with the MongoDB Shell, you'll likely move on t
 Run this command in your terminal:
 
 ```sh
-mongosh
+mongosh "mongodb+srv://cluster0.bvo1sdn.mongodb.net/" --apiVersion 1 --username <username>
 ```
 
 If you need to install mongosh, you can do so using brew by entering the following commands into your CLI:
