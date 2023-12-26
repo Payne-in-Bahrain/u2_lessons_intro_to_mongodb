@@ -76,6 +76,19 @@ Run this command in your terminal:
 mongosh
 ```
 
+If you need to install mongosh, you can do so using brew by entering the following commands into your CLI:
+
+```
+brew tap mongodb/brew
+brew install mongosh
+```
+
+Verify the installation by closing the terminal, reopening and typing:
+
+```
+mongosh --version
+```
+
 ![shell](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F39591%2Fscreenshots%2F553790%2Fshellloader.gif&f=1&nofb=1)
 
 We are now interacting with the [mongo shell](https://docs.mongodb.com/manual/mongo/). The mongo shell is an interactive JavaScript interface to MongoDB. We can use the mongo shell to perform CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) operations as well as MongoDB administrative operations.
