@@ -23,8 +23,6 @@ Ever wondered why To-Dos in Express were lost when the server restarted? Databas
 
 ## More About MongoDB
 
-![MongoDB](https://i.imgur.com/UzJEHVn.jpg)
-
 MongoDB is part of the MEAN/MERN Stack, emphasizing JavaScript. It uses JavaScript-like syntax (not SQL) and stores records in BSON format.
 
 ### MongoDB Documents
