@@ -1,83 +1,37 @@
-<img src="https://i.imgur.com/vzWk7s4.png">
+# MongoDB
 
-# Intro to MongoDB
+![MongoDB](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcommunity.microstrategy.com%2Fservlet%2FrtaImage%3Feid%3Dka02R000000kcTI%26feoid%3D00N44000006DfHE%26refid%3D0EM440000002Jgk&f=1&nofb=1)
 
-## Learning Objectives
-
-| Students Will Be Able To:                                 |
-| :-------------------------------------------------------- |
-| Describe the Use Case of Databases                        |
-| Describe the Format of a Document                         |
-| Save and Retrieve MongoDB Documents using the Mongo Shell |
-| Describe Embedding & Referencing                          |
-
-## Road Map
-
-- What's a Database?
-- MongoDB vs. Relational SQL Databases
-- More About MongoDB
-- MongoDB Documents
-- Creating a Database and Inserting Documents
-- Data Modeling - Intro
-- Data Modeling in MongoDB
+## Overview
+In this lesson, we'll learn all about MongoDB, one of the most popular databases in the tech world.  We'll learn how to interact with *documents* in the mongo shell and why that's important.
 
 ## What's a Database?
 
-Remember when we added new To-Dos in Express and we would "lose" them when nodemon restarted the server?
+Ever wondered why To-Dos in Express were lost when the server restarted? Databases solve this by persisting data. There are various types, and SQL and MongoDB are popular ones.
 
-If we were saving those To-Dos in a database, they would remain there until we deleted them.
+### MongoDB vs. SQL
 
-Databases are a way to organize and save, or persist, data.
+#### Key Concepts
 
-There are lots of different database systems - check out [this site](http://db-engines.com/en/ranking) that tracks the popularity of different database systems.
+![MongoDB vs SQL Concepts](https://i.imgur.com/XdV3hSs.png)
 
-As you can see, **Relational Database Management Systems (RDMS)** are by far the most popular - they've been around since the 1960s. They are more commonly referred to as **SQL Databases** because they are designed and accessed using **Structured Query Language**.
+#### Differences
 
-However, you'll also see that **MongoDB** is by far the most popular **NoSQL** database system.
-
-There are several varieties of NoSQL databases. MongoDB is of the **document-based** variety because it stores and retrieves _documents_.
-
-
-## MongoDB vs. Relational SQL Databases
-
-### Terminology
-
-<img src="https://i.imgur.com/XdV3hSs.png" style="width:900px">
-
-As diagramed above, there is a one-to-one mapping of the key concepts of a database.
-
-### Key Differences
-
-#### Use Cases
-
-SQL databases and NoSQL databases can often be used interchangeably for very simple scenarios however they are very different approaches to storing data and accessing that data. Due to these fundamental differences there are scenarios where a NoSQL database would completely fall flat and vice versa for a relation SQL database. There is a reason we separate these two types of databases into two separate categories, we don't choose our databases by picking the option we prefer the most, we choose a database that fits our solution the best.
-
-It is also noteworthy to point out that there is a significantly larger variety of NoSQL database structures. We will be using MongoDB which is a specific type of NoSQL database called a document database(See diagram above, our BSON storage is called a document). Another very popular document database is [DynamoDB](https://aws.amazon.com/dynamodb/) created by Amazon. You will also hear of databases like [Casandra](https://cassandra.apache.org/_/index.html)(an older NoSQL database designed around distributed data storage solutions) and [Neo4j](https://neo4j.com/)(a graph database created to manage graph data structures) which are also NoSQL databases but are not document databases and have different best fit use cases and were created to solve slightly different types of database challenges.
-
-It is critical that you understand what you need out of your database solution and that you choose wisely when you make those choices, as choosing the wrong database can be a catastrophic mistake if discovered too late in a project. For the purposes of this course we'll be focusing on relational databases like postgres and mySQL and the mongoDB NoSQL databases. 
-
-However, in general:
-
-- **Relational Databases** are preferred in mission-critical financial applications such as banking, stock trading, storing critical user or product records etc., due to their strength of handling [transactions](https://en.wikipedia.org/wiki/Database_transaction). They are not very good however on handling data that can't be strictly organized into tables of structured columns because they have a strict **schema** (structure) they must adhere to. Relational databases also suffer from read limitations, as only one query can be performed on a single table at a time. This can introduce [locking scenarios](https://www.sqlshack.com/locking-sql-server/) which are a bit different for each type of SQL database, the link shared is for sql server specifically. Database locking basically means only one user can be operating in a table at one time, if two processes attempt to perform a task on the same data, one will have to wait for the other to finish first, in high frequency situations this can create significant database slow down to database consumers. Note locking can be a key feature of transactional databases and might even be ideal for making consistent updates to your data to ensure two processes do not update the same data at the same time. Due to these limitations SQL databases typically have issues allowing many processes to operate within them at one time and do not scale as easily as most NoSQL alternatives. Relational databases also perform tasks that require data aggregation much better than NoSQL solutions.
-
-- **NoSQL(MongoDB document database)** is preferred for storing vast amounts of unstructured data, such as in social-media type applications, think reddit with its many sub-reddits and comment trees.  MongoDB is also a great choice when prototyping applications because it is **schema-less** and more adaptable to change. NoSQL databases like MongoDB also benefit from having significantly higher read capacity, which means you can have far more processes reading data from them than a SQL solutions of the same capacity. For this reason you often see larger products utilizing both SQL and NoSQL databases, however this topic is extremely rich and has many nuances that we will not come close to cover within the scope of this course, however, they are fascinating topics that one could build an entire career working with.
+**Use Cases:**
+- **SQL Databases:** Ideal for mission-critical apps like banking. Strict schema and read limitations.
+- **NoSQL (MongoDB):** Perfect for vast unstructured data like social media. Schema-less, adaptable, and scalable.
 
 ## More About MongoDB
 
-<img src="https://i.imgur.com/UzJEHVn.jpg" style="width:900px">
+![MongoDB](https://i.imgur.com/UzJEHVn.jpg)
 
-MongoDB puts the "M" in the MEAN/MERN Stack, technology stacks that emphasizes the use of JavaScript on both the front-end and back-end.
+MongoDB is part of the MEAN/MERN Stack, emphasizing JavaScript. It uses JavaScript-like syntax (not SQL) and stores records in BSON format.
 
-Instead of _SQL_ (_Structured Query Language_), MongoDB uses JavaScript-like syntax for communicating with the database. Mongo also stores its records in collections of documents that are formatted in a JSON-like syntax called BSON.
+### MongoDB Documents
 
-You're going to see that working with **data** in MongoDB is like working with JavaScript objects, often referred to by the acronym POJO(plain old javascript object).
+In MongoDB, data is saved and retrieved as documents in collections. Documents look like JavaScript objects (POJOs).
 
-## MongoDB Documents
-
-In MongoDB, we save and retrieve _documents_ to and from a _collection_. 
-
-Lets take a look of what a MongoDB _document_ might look like:
-
+Example Document:
 ```js
 {
     _id: ObjectId("5099803df3f4948bd2f98391"),
@@ -87,23 +41,12 @@ Lets take a look of what a MongoDB _document_ might look like:
     contribs: [ "Turing machine", "Turing test", "Turingery" ],
     views: 1250000
 }
-```
 
 As you can see, this format looks very much like a JavaScript object.
 
 ### The Document `_id`
 
-The `_id` is a special field that represents the document's _unique identifier_. If you're familiar with SQL databases, a document's `_id` is like a _primary key_.
-
-MongoDB automatically creates the `_id` when documents are saved for the first time.
-
-MongoDB uses a special `ObjectId` datatype for the value of `_id`.
-
-`ObjectId`s are JS objects, but we'll be able to use their string representation most of the time when we work with them in Mongoose (next lesson).
-
-The value that MongoDB creates for the `_id` is guaranteed to be _globally unique_.
-
-## Creating a Database and Inserting Documents
+The _id is a unique identifier, similar to SQL's primary key. It's globally unique and created automatically.
 
 ### Before we Start
 
@@ -111,236 +54,201 @@ In this lesson, we are going to be working directly with MongoDB to create and r
 
 However, after this brief session working with the MongoDB Shell, you will likely never do it again since most developers use the [Mongoose](https://mongoosejs.com/) library to CRUD a MongoDB.  We're going to learn Mongoose next!
 
-### The MongoDB Shell
 
-We already installed the MongoDB Shell using `brew install mongosh` when we set up our Atlas hosted MongoDB.
+## Getting started
+- Open up Terminal
+- Windows Users Only: `sudo service mongodb start`
 
-Atlas also provided us with a command to connect to the shell that looks something like this:
+# MongoDB: The database for modern applications
 
-```
-mongosh "mongodb+srv://cluster0.4jkevsm.mongodb.net/myFirstDatabase" --apiVersion 1 --username your-username
-```
+*"MongoDB is a general purpose, document-based, distributed database built for modern application developers and for the cloud era ... MongoDB stores data in flexible, JSON-like documents, meaning fields can vary from document to document and data structure can be changed over time" - MongoDB*
 
-After running that command and entering your database user's password you will be prompted within the MongoDB Shell, for example:
+### Used by millions of developers to power the world's most innovative products and services
 
-```
-Atlas atlas-lge6ib-shard-0 [primary] myFirstDatabase>
-```
+![](https://i.imgur.com/bEdESpM.png)
 
-List the shell's commands available: `> help`
+## Let's Get Into the Shell
 
-Show the list of databases: `> show dbs`
+Run this command in your terminal:
 
-> Note that `myFirstDatabase` will not be in the list until we create our first document.
-
-Show the name of the currently active database: `> db`
-
-Show the collections of the current database `> show collections`
-
-### Inserting Documents into a Collection
-
-This is how we can create and insert a document into a collection named `people`:
-
-```
-// Be sure not to type the "..."s below
-// they simply indicate multi-line input mode
-> db.people.insertOne({
-... name: 'Maria',
-... favColor: 'Orange'
-})
+```sh
+mongosh
 ```
 
-Using a collection for the first time creates it!
+![shell](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F39591%2Fscreenshots%2F553790%2Fshellloader.gif&f=1&nofb=1)
 
+We are now interacting with the [mongo shell](https://docs.mongodb.com/manual/mongo/). The mongo shell is an interactive JavaScript interface to MongoDB. We can use the mongo shell to perform CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) operations as well as MongoDB administrative operations.
+
+## Working with MongoDB
+
+Once we're connected to a MongoDB server if we'd like to know what [database](https://docs.mongodb.com/manual/reference/glossary/#term-database) we're connected to we can issue the following command:
+
+```sh
+db
 ```
-> show collections
-people
-```
+> `db` will return the current [database](https://docs.mongodb.com/manual/reference/glossary/#term-database) we're connected to.
 
-👉 **YOU DO - Add Another Document <small>(1 min)</small>**
+To switch [databases](https://docs.mongodb.com/manual/reference/glossary/#term-database) we can issue the following command:
 
-- Add another "person" document to the `db.people` collection. But this time, add an additional field called `birthDate` and assign it a date value with something like this: `birthDate: new Date('3/21/1981')`
-
-
-### Reading Documents in a Collection
-
-We can list the documents in the collection using the `find()` method on the collection:
-
-```
-> db.people.find({})
-[
-  {
-    _id: ObjectId("633c9f214c88975587bfa14d"),
-    name: 'Maria',
-    color: 'Orange'
-  },
-  {
-    _id: ObjectId("633c9f214c88975587bfa14e"),
-    name: 'Jim',
-    color: 'Purple',
-    birthDate: ISODate("2001-06-13T07:00:00.000Z")
-  }
-]
+```sh
+use <database>
 ```
 
-The `{}` argument is called a **query object** and is used to specify the criteria of the query.  If we provide an empty query object, i.e., `find({})`, all documents in the collection are returned.
+> Note! You can switch to a non-existing [database](https://docs.mongodb.com/manual/reference/glossary/#term-database) and when you first store data in that [database](https://docs.mongodb.com/manual/reference/glossary/#term-database), the [database](https://docs.mongodb.com/manual/reference/glossary/#term-database) gets created.
 
-Here's how we can find "person" documents with the best color:
+To list all [databases](https://docs.mongodb.com/manual/reference/glossary/#term-database):
 
-```
-db.people.find({color: 'Purple'})
-[
-  {
-    _id: ObjectId("633c9f214c88975587bfa14e"),
-    name: 'Jim',
-    color: 'Purple',
-    birthDate: ISODate("2001-06-13T07:00:00.000Z")
-  }
-]
+```sh
+show dbs
 ```
 
-### Exit the MongoDB Shell
+![HereWeGo](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F31.media.tumblr.com%2F3d0cd0681b0ff3d046c9d0c67740235e%2Ftumblr_inline_mjvliy9cCV1qz4rgp.gif&f=1&nofb=1)
 
-Type `exit` or `quit` to exit the shell.
+## [MongoDB CRUD Operations](https://docs.mongodb.com/manual/crud/)
 
-## Data Modeling - Intro
+We are going to learn how to perform all MongoDB CRUD operations using the mongo shell. Let's start by creating a users [database](https://docs.mongodb.com/manual/reference/glossary/#term-database):
 
-### Data Entities
-
-A **Data Entity** is to data modeling as a Data Resource is to RESTful Routing/CRUD.
-
-A data entity represents a type of data in an application.
-
-Examples include:  **User**, **Account**, **Post**, **Comment**, etc.
-
-### Relationships
-
-**Relationships** exist between entities, for example:
-
-- _A User has many Posts; and a Post belongs to a User_<br>This relationship is called a **one-to-many**.
-
-- _A User has and belongs to many Accounts; and an Account has and belongs to many Users_<br>This relationship is called a **many-to-many**.
-
-There is also a less common **one-to-one** relationship. For example, _A User has a Profile; and a Profile belongs to a User_
-
-You will be asked to model the relationships as part the planning for your CRUD projects.  Here's a [link](https://www.lucidchart.com/pages/er-diagrams?a=0) that talks more about data relationships and how to create what's called an Entity Relationship Diagram (ERD).
-
-### Database Implementation
-
-##### SQL Databases
-
-In SQL Databases, by design, there would be a **table** for each _data entity_.
-
-Related data is _joined_ together using SQL queries.
-
-##### MongoDB
-
-In MongoDB, unlike with SQL tables, there might not be a **collection** for every _data entity_.
-
-Unlike in SQL, there's no requirement to break different _entity types_ into separate **collections**.
-
-The reason is that some _entities_ are better off being **embedded** with its parent document instead, for example, _comments_ that belong to a _post_. It would not make sense to have to query a separate **comments** collection to obtain the comments for a given post...
-
-## Data Modeling in MongoDB
-
-There are two ways to model related data in MongoDB:
-
-1. Using **embedding**, where "subdocuments" are contained inside of its document.
-
-2. Using **referencing**, where a document contains just the related document's `ObjectId`.
-
-Both approaches can be used simultaneously in the same document.
-
-### Embedded Documents
-
-Here's what an embedding looks like:
-
-A document in the `people` collection:
-
-```js
-// assume a document from a people collection
-{
-  _id: ObjectId("5099803df3f4948bd2e983a4"),
-  name: "Joe Smith",
-  contacts: [
-    {
-      type: "mobile",
-      contact: "(555) 555-5555"
-    },
-    {
-      type: "email",
-      contact: "joe@smith.com"
-    }
-  ]
-}
+```sh
+use myUserDatabase
 ```
 
-In a relational database, those contacts would **have** to be in a separate table.
+### [Insert a Single Document](https://docs.mongodb.com/manual/tutorial/insert-documents/)
 
-Embedding data is more efficient than referencing data because it takes extra queries to fetch related data.
+Let's now create a new users [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection) and insert a new user!
 
-FYI, when we use Mongoose, even those subdocuments will automatically have their own `_id`.
-
-### Referencing Documents (linking)
-
-Here's how the above `person --< contact` model would be implemented via **referencing**:
-
-```js
-// assume a document from a people collection
-{
-  _id: ObjectId("5099803df3f4948bd2e983a4"),
-  name: "Joe Smith",
-  contacts: [
-    ObjectId("5099803df3f4948bd2f98391"),
-    ObjectId("5099803df3f4948bd1f97203")
-  ]
-}    
+```sh
+db.users.insertOne( { name: "Benny", age: 28, status: "active" } )
 ```
 
-Two referenced documents in the `contacts` collection:
+- `db` represents our current [database](https://docs.mongodb.com/manual/reference/glossary/#term-database) (which in our case should be `myUserDatabase`)
+- `users` is the new [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection) we created
+> Remember: A [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection) is a grouping of MongoDB documents
+- `{ name: "Benny", age: 28, status: "active" }` is the [document](https://docs.mongodb.com/manual/reference/glossary/#term-document)
 
-```js
-{
-  _id: ObjectId("5099803df3f4948bd2f98391"),
-  type: "mobile",
-  contact: "(555) 555-5555"
-}
+We can also [insert many documents](https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/#db.collection.insertMany) at once!
+
+```sh
+db.users.insertMany([
+  { name: "Claire", age: 28, status: "active" },
+  { name: "Joey", age: 28, status: "active" },
+  { name: "Abe", age: 22, status: "pending" },
+  { name: "Sunny", age: 23, status: "pending" },
+  { name: "Lizzy", age: 28, status: "active" },
+  { name: "Julie", age: 21, status: "active" }
+])
 ```
 
-and
+### [Read Operations](https://docs.mongodb.com/manual/crud/#read-operations)
 
-```js
-{
-  _id: ObjectId("5099803df3f4948bd1f97203"),
-  type: "email",
-  contact: "joe@smith.com"
-}
+Let's say we would like to retrieve the user [document](https://docs.mongodb.com/manual/reference/glossary/#term-document) that we just inserted into our users [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection). How do we do this?
+
+```sh
+db.users.find( { name: "Benny" } )
 ```
 
-As you can see, the related _contacts_ are separate documents.
+You can see we specify the constraint that we are looking for, so the constraint is: find all users in the users [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection) where name is "Benny". We can pass in additional constraints if we would like or we can remove all constraints if we'd like to see all users in the users [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection):
 
-We would have to make separate queries to get to that data, although, Mongoose can do this automatically using the `populate` method.
+```sh
+db.users.find( {} )
+```
 
-### Which Document Should Hold the "Reference"?
+> Note: Once a [document](https://docs.mongodb.com/manual/reference/glossary/#term-document) is created in a Mongo database, [Mongo assigns each document a unique identifier](https://docs.mongodb.com/manual/reference/glossary/#term-id), hence the `_id` you see. The `_id` field is immutable.
 
-When referencing data in MongoDB, you can hold the `ObjectId` in either document or both!
+What if we would like to only return user `names` and omit everything else e.g. `age`, `status`? We can do this with a [projection](https://docs.mongodb.com/manual/reference/method/db.collection.find/#find-projection). [Projection](https://docs.mongodb.com/manual/reference/method/db.collection.find/#find-projection) is the second argument in the query command below:
 
-The decision depends upon the design and functionality of your application and it's not always clear-cut.
+```sh
+db.users.find( { age: 28 }, { name: 1 } )
+```
 
-### If Embedding is More Efficient, Why Reference at All?
+> The above will return all users within the users [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection) in the myUserDatabase that have age 28 and will only return their name
 
-- If the amount of data can exceed the 16MB size limit for a document, an uncommon situation however - the entire body of work of Shakespeare can be stored in 5 megabytes! Please note that if you do not consider how large a set of embedded documents could get, you may run into issues in production where your documents grow to be too large. For example, let's consider reddit, once a post on reddit goes viral and you've stored all of your comments and comments on those comments inside of your original post document, that series of conversations could easily exceed 16MB and that issue would be fundamental in your system, which means it would be a nightmare to correct once a product has been deployed to production. 
+or maybe we would like `name` and `age` but don't care for `status`:
 
-- When multiple parent documents need access the same child document and that child's data changes frequently. For example, a document modeling a _bank account_ should be referenced because it could be "owned" by more than one individual - if the account data were embedded in two or more parent documents, can you imagine how difficult it would be keeping the transactional & balance data in sync?
+```sh
+db.users.find( { age: 28 }, { name: 1, age: 1 } )
+```
 
-- If it makes sense for your application. For example, if you wanted to view all _posts_ on your landing page, regardless of the user that posted them, it would certainly take more effort to extract the _posts_ from each user if they were embedded. However, it would be gravy to get the _posts_ from their own collection.
+![Sweat](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fm0.joe.ie%2Fwp-content%2Fuploads%2F2016%2F06%2F09163900%2Fsweat.gif&f=1&nofb=1)
 
-For more details regarding data modeling in MongoDB, start with [this section of mongoDB's documentation ](http://docs.mongodb.org/manual/core/data-modeling-introduction/) or this [hour long YouTube video](https://www.youtube.com/watch?v=PIWVFUtBV1Q)
+### [Comparison Query Operators](https://docs.mongodb.com/manual/reference/operator/query-comparison/#query-selectors-comparison)
 
-## References
+We have a host of comparison query operators available for us to use:
 
-[MongoDB homepage](https://www.mongodb.org/)
+![](https://i.imgur.com/EoYFpio.png)
 
-[MongoDB Atlas - MongoDB Cloud Hosting](https://www.mongodb.com/cloud/atlas)
+```sh
+db.users.find( { age: { $gt: 25 } } )
+```
 
-[MongooseJS - ODM](http://mongoosejs.com/)
+**Specify AND Conditions**
+
+Find all users who have status of pending **and** age less than 25:
+
+```sh
+db.users.find( { status: "pending", age: { $lt: 25 } } )
+```
+
+**Specify OR Conditions**
+
+Find all users with status of pending **or** age less than 25.
+
+```sh
+db.users.find( { $or: [ { status: "pending" }, { age: { $lt: 25 } } ] } )
+```
+
+![SweatMore](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F78.media.tumblr.com%2Fdee78ea921b5f3c405ac7379ae8e7280%2Ftumblr_ouzv0roLnk1qe8lb8o1_500.gif&f=1&nofb=1)
+
+### [Update a Single Document](https://docs.mongodb.com/manual/tutorial/update-documents/)
+
+In order to update a document in a [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection) in MongoDB, we need to first find the [document](https://docs.mongodb.com/manual/reference/glossary/#term-document) we would like to update, then using the `$set` operator, we specify what field we would like to update and to what. And finally, we use the `$currentDate` operator to update the value of the `lastModified` field to the current date (if the `lastModified` field does not exist then one will be created).
+
+```sh
+db.users.updateOne( { name: "Benny" }, { $set: { name: "Ben", age: 29 }, $currentDate: { lastModified: true } } )
+```
+
+[**Update Multiple Documents**](https://docs.mongodb.com/manual/reference/method/db.collection.updateMany/#db.collection.updateMany)
+
+```sh
+db.users.updateMany( { "age": { $lt: 27 } }, { $set: { name: "Ben", age: 29 }, $currentDate: { lastModified: true } } )
+```
+
+[**Replace a Document**](https://docs.mongodb.com/manual/reference/method/db.collection.replaceOne/#db.collection.replaceOne)
+
+You can replace an entire document. Just keep in mind the `_id` of a document is immutable - you cannot change it, however, you can change everything else.
+
+```sh
+db.users.replaceOne( { name: "Ben" }, { name: "Benny", age: 39, status: "active" } )
+```
+
+![SoMuchSweat](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F4.bp.blogspot.com%2F-J7QcjO1hLAI%2FW8dYlILL_6I%2FAAAAAAAAJDs%2FTmNodw6wnGA9pq2eXBmi5zfVIuX4iYb0wCLcBGAs%2Fs1600%2Fsweating-1537819596.gif&f=1&nofb=1)
+
+### [Delete a Document](https://docs.mongodb.com/manual/tutorial/remove-documents)
+
+To delete one document that matches a condition:
+
+```sh
+db.users.deleteOne( { name: "Joey" } )
+```
+
+[**Delete All Documents that Match a Condition**](https://docs.mongodb.com/manual/reference/method/db.collection.deleteMany/#db.collection.deleteMany)
+
+```sh
+db.users.deleteMany( { status: "pending" } )
+```
+
+To delete all documents in a [collection](https://docs.mongodb.com/manual/reference/glossary/#term-collection):
+
+```sh
+db.users.deleteMany({})
+```
+
+![Relief](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2F4PT6v3PQKG6Yg%2Fgiphy.gif&f=1&nofb=1)
+
+## Recap
+Wow, that was alot.  There are so many ways to interact with our MongoDB database by using the mongo shell, but it's not exactly easy is it?  In the upcoming lessons, we'll learn about tools we have that can make this interaction so much easier and more intuitive, but it's important to understand the basics and how our database is structured.  This will ensure we are performing our CRUD operations properly when we use these new tools going forward.
+
+## Resources
+- [Mongo Shell](https://docs.mongodb.com/manual/mongo/)
+- [Database](https://docs.mongodb.com/manual/reference/glossary/#term-database)
+- [MongoDB Glossary](https://docs.mongodb.com/manual/reference/glossary)
+
