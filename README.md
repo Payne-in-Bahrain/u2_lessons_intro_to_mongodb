@@ -41,9 +41,9 @@ Example Document:
     contribs: [ "Turing machine", "Turing test", "Turingery" ],
     views: 1250000
 }
+```
 
 As you can see, this format looks very much like a JavaScript object.
-```
 
 ### The Document `_id`
 
