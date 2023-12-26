@@ -43,6 +43,7 @@ Example Document:
 }
 
 As you can see, this format looks very much like a JavaScript object.
+```
 
 ### The Document `_id`
 
