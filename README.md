@@ -53,8 +53,7 @@ The _id is a unique identifier, similar to SQL's primary key. It's globally uniq
 
 In this lesson, we are going to be working directly with MongoDB to create and read data using the MongoDB Shell in a Terminal window.
 
-However, after this brief session working with the MongoDB Shell, you will likely never do it again since most developers use the [Mongoose](https://mongoosejs.com/) library to CRUD a MongoDB.  We're going to learn Mongoose next!
-
+After this brief session working with the MongoDB Shell, you'll likely move on to using the Mongoose library for MongoDB interactions. Mongoose simplifies development by providing a structured schema definition, high-level models for CRUD operations, middleware support for custom logic, query building, data validation, and features like population for handling relationships. It streamlines the process, promotes good practices, and is widely adopted among developers working with Node.js and MongoDB. We'll delve into Mongoose in the upcoming lessons!
 
 ## Getting started
 - Open up Terminal
